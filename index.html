@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AppForge — AI App Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080B14;
+    --surface: #0D1120;
+    --surface2: #131828;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00E5FF;
+    --accent2: #7B5EA7;
+    --accent3: #FF6B35;
+    --text: #E8EAF0;
+    --muted: #6B7A9A;
+    --gold: #FFD166;
+    --green: #06D6A0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 { font-family: 'Syne', sans-serif; }
+
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(8,11,20,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #080B14;
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background: #33EEFF;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(0,229,255,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .btn-outline:hover {
+    background: rgba(0,229,255,0.08);
+    transform: translateY(-1px);
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: #080B14;
+    font-weight: 600;
+  }
+
+  .btn-gold:hover {
+    background: #FFD980;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(255,209,102,0.3);
+  }
+
+  .btn-green {
+    background: var(--green);
+    color: #080B14;
+    font-weight: 600;
+  }
+
+  .btn-green:hover {
+    background: #2DEDB2;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(6,214,160,0.3);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 48px 80px;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+
+  .hero h1 .line2 { color: var(--accent); }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-actions .btn { padding: 13px 28px; font-size: 15px; }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ORBS */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .orb1 {
+    width: 500px; height: 500px;
+    background: rgba(0,229,255,0.06);
+    top: -100px; left: -100px;
+  }
+  .orb2 {
+    width: 400px; height: 400px;
+    background: rgba(123,94,167,0.08);
+    bottom: 0; right: -100px;
+  }
+
+  /* PLATFORMS */
+  .platforms-strip {
+    position: relative;
+    z-index: 1;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    background: rgba(13,17,32,0.5);
+  }
+
+  .platforms-label {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .platforms-scroll {
+    display: flex;
+    gap: 48px;
+    animation: scrollPlatforms 20s linear infinite;
+    width: max-content;
+  }
+
+  @keyframes scrollPlatforms {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .platform-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .platform-chip .icon { font-size: 16px; }
+
+  /* SECTION */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 96px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 48px;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  /* CATEGORY FILTERS */
+  .category-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .cat-btn {
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .cat-btn:hover, .cat-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.06);
+  }
+
+  /* APP GRID */
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .app-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .app-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .app-card:hover {
+    border-color: rgba(0,229,255,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  }
+
+  .app-card:hover::before { opacity: 1; }
+
+  .app-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .app-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .app-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .badge {
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .badge-platform {
+    background: rgba(123,94,167,0.15);
+    color: #B39DDB;
+    border: 1px solid rgba(123,94,167,0.2);
+  }
+
+  .badge-cat {
+    background: rgba(0,229,255,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(0,229,255,0.15);
+  }
+
+  .badge-new {
+    background: rgba(6,214,160,0.1);
+    color: var(--green);
+    border: 1px solid rgba(6,214,160,0.2);
+  }
+
+  .badge-featured {
+    background: rgba(255,209,102,0.1);
+    color: var(--gold);
+    border: 1px solid rgba(255,209,102,0.2);
+  }
+
+  .app-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .app-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .app-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .app-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .stars { color: var(--gold); font-size: 12px; }
+
+  .app-reviews { font-size: 12px; color: var(--muted); }
+
+  .app-vendor { font-size: 12px; color: var(--muted); }
+  .app-vendor span { color: var(--text); font-weight: 500; }
+
+  .app-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .app-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .app-price .currency { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .app-price .sub-price { font-size: 11px; color: var(--muted); font-family: 'DM Sans'; font-weight: 400; display: block; margin-top: 2px; }
+
+  .app-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-sm {
+    padding: 6px 14px;
+    font-size: 12px;
+    border-radius: 7px;
+  }
+
+  /* FEATURED BANNER */
+  .featured-banner {
+    background: linear-gradient(135deg, rgba(0,229,255,0.08) 0%, rgba(123,94,167,0.12) 100%);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 20px;
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-banner::before {
+    content: 'FEATURED';
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    font-weight: 700;
+    background: rgba(255,209,102,0.1);
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,209,102,0.2);
+  }
+
+  .featured-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .featured-desc { color: var(--muted); font-size: 14px; max-width: 500px; }
+
+  /* HOW IT WORKS */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .how-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .how-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(0,229,255,0.06);
+    position: absolute;
+    top: 16px; right: 24px;
+    letter-spacing: -3px;
+  }
+
+  .how-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .how-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .how-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .pricing-card.featured-plan {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, rgba(0,229,255,0.05) 0%, var(--surface) 60%);
+  }
+
+  .popular-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #080B14;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+  }
+
+  .plan-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .plan-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+  .plan-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 4px;
+  }
+
+  .plan-price .per { font-size: 16px; font-weight: 400; color: var(--muted); }
+
+  .plan-note { font-size: 12px; color: var(--muted); margin-bottom: 28px; }
+
+  .plan-features {
+    list-style: none;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .plan-features li {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+  }
+
+  .plan-features li .check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(6,214,160,0.15);
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .plan-features li .x {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  /* VENDOR SECTION */
+  .vendor-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .vendor-text { }
+
+  .vendor-text p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .vendor-features {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 28px 0;
+  }
+
+  .vendor-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .feat-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .feat-body h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .feat-body p { font-size: 13px; color: var(--muted); }
+
+  .vendor-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  .fee-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .fee-row:last-child { border-bottom: none; }
+  .fee-label { color: var(--muted); }
+  .fee-val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  /* CUSTOM BUILD */
+  .custom-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .custom-section::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .custom-section h2 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .custom-section p {
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 36px;
+    font-size: 15px;
+  }
+
+  .custom-form {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+
+  .form-field label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: rgba(0,229,255,0.4);
+  }
+
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .form-field select option { background: var(--surface); }
+
+  /* STANDARDS */
+  .standards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .standard-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .standard-icon { font-size: 28px; margin-bottom: 14px; }
+  .standard-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .standard-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* HOSTING */
+  .hosting-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .hosting-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+  }
+
+  .hosting-tier {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .hosting-price {
+    font-size: 28px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 12px 0 4px;
+  }
+
+  .hosting-period { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+  .hosting-specs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .hosting-specs li::before {
+    content: '→ ';
+    color: var(--accent);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .testimonial-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .testimonial-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .author-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .author-role { font-size: 12px; color: var(--muted); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(8px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: rgba(255,255,255,0.06);
+    border: none;
+    color: var(--muted);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+  .modal-app-header {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .modal-icon {
+    width: 72px; height: 72px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .modal-info h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .modal-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .modal-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .modal-price-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .modal-price-card.highlight {
+    border-color: var(--accent);
+    background: rgba(0,229,255,0.04);
+  }
+
+  .modal-price-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .modal-price-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .modal-price-note { font-size: 11px; color: var(--muted); }
+
+  /* DEMO AREA */
+  .demo-area {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    min-height: 200px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    position: relative;
+  }
+
+  .demo-header {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .demo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .demo-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .demo-msg {
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    max-width: 85%;
+  }
+
+  .demo-msg.user {
+    background: rgba(0,229,255,0.1);
+    color: var(--accent);
+    align-self: flex-end;
+    border: 1px solid rgba(0,229,255,0.15);
+  }
+
+  .demo-msg.ai {
+    background: var(--surface2);
+    color: var(--text);
+    align-self: flex-start;
+    border: 1px solid var(--border);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 48px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    max-width: 1280px;
+    margin: 0 auto 48px;
+  }
+
+  .footer-brand .logo { font-size: 20px; margin-bottom: 16px; display: block; }
+  .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 300px; }
+
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { text-decoration: none; color: var(--muted); font-size: 13px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .footer-bottom-links { display: flex; gap: 20px; }
+  .footer-bottom-links a { color: var(--muted); text-decoration: none; }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface);
+    border: 1px solid rgba(6,214,160,0.3);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 13px;
+    z-index: 300;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+  }
+
+  .notif.show { display: flex; }
+
+  @keyframes slideIn {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* SEARCH BAR */
+  .search-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+
+  .search-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: rgba(0,229,255,0.4); }
+  .search-input::placeholder { color: var(--muted); }
+
+  /* ENHANCEMENTS CALLOUT */
+  .enhancement-banner {
+    background: linear-gradient(135deg, rgba(255,107,53,0.08) 0%, rgba(255,209,102,0.06) 100%);
+    border: 1px solid rgba(255,107,53,0.2);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .enhancement-icon { font-size: 40px; flex-shrink: 0; }
+  .enhancement-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .enhancement-text p { font-size: 13px; color: var(--muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .how-grid, .pricing-grid, .hosting-grid, .standards-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .vendor-split, .footer-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; gap: 24px; }
+    .modal-pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">App<span>Forge</span></div>
+  <ul class="nav-links">
+    <li><a href="#marketplace">Marketplace</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#vendors">For Vendors</a></li>
+    <li><a href="#hosting">Hosting</a></li>
+    <li><a href="#custom">Custom Build</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn btn-ghost" onclick="showNotif('Sign in coming soon!')">Sign In</button>
+    <button class="btn btn-primary" onclick="showNotif('Get started — account creation coming soon!')">Get Started</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-badge"><span class="dot"></span>The AI App Economy Starts Here</div>
+  <h1>The Marketplace for <br><span class="line2">AI-Powered Apps</span></h1>
+  <p>Buy, sell, test, and deploy apps built on Claude, Replit, Lindy, Bubble, and 20+ AI platforms. One destination for the entire AI app ecosystem.</p>
+  <div class="hero-actions">
+    <button class="btn btn-primary" onclick="document.getElementById('marketplace').scrollIntoView({behavior:'smooth'})">Browse Apps ↓</button>
+    <button class="btn btn-outline" onclick="document.getElementById('vendors').scrollIntoView({behavior:'smooth'})">List Your App</button>
+    <button class="btn btn-ghost" onclick="document.getElementById('custom').scrollIntoView({behavior:'smooth'})">Build Custom App</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">2,400<span>+</span></div>
+      <div class="stat-label">Apps Listed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">340<span>+</span></div>
+      <div class="stat-label">Verified Vendors</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">18<span>k+</span></div>
+      <div class="stat-label">Businesses Using</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">AI Platforms</div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORMS STRIP -->
+<div class="platforms-strip">
+  <div class="platforms-label">Apps built on leading AI platforms</div>
+  <div style="overflow:hidden">
+    <div class="platforms-scroll">
+      <div class="platform-chip"><span class="icon">🤖</span> Claude (Anthropic)</div>
+      <div class="platform-chip"><span class="icon">⚡</span> Replit</div>
+      <div class="platform-chip"><span class="icon">🔗</span> Lindy.ai</div>
+      <div class="platform-chip"><span class="icon">🫧</span> Bubble</div>
+      <div class="platform-chip"><span class="icon">🌊</span> Flowise</div>
+      <div class="platform-chip"><span class="icon">🔧</span> n8n</div>
+      <div class="platform-chip"><span class="icon">🚀</span> Vercel AI</div>
+      <div class="platform-chip"><span class="icon">🧠</span> LangChain</div>
+      <div class="platform-chip"><span class="icon">🤝</span> CrewAI</div>
+      <div class="platform-chip"><span class="icon">💡</span> OpenAI Platform</div>
+      <div class="platform-chip"><span class="icon">📐</span> Retool</div>
+      <div class="platform-chip"><span class="icon">🌐</span> Webflow + AI</div>
+      <!-- duplicate for loop -->
+      <div class="platform-chip"><span class="icon">🤖</span> Claude (Anthropic)</div>
+      <div class="platform-chip"><span class="icon">⚡</span> Replit</div>
+      <div class="platform-chip"><span class="icon">🔗</span> Lindy.ai</div>
+      <div class="platform-chip"><span class="icon">🫧</span> Bubble</div>
+      <div class="platform-chip"><span class="icon">🌊</span> Flowise</div>
+      <div class="platform-chip"><span class="icon">🔧</span> n8n</div>
+      <div class="platform-chip"><span class="icon">🚀</span> Vercel AI</div>
+      <div class="platform-chip"><span class="icon">🧠</span> LangChain</div>
+      <div class="platform-chip"><span class="icon">🤝</span> CrewAI</div>
+      <div class="platform-chip"><span class="icon">💡</span> OpenAI Platform</div>
+      <div class="platform-chip"><span class="icon">📐</span> Retool</div>
+      <div class="platform-chip"><span class="icon">🌐</span> Webflow + AI</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARKETPLACE -->
+<section id="marketplace">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">Marketplace</div>
+      <h2 class="section-title">Discover AI Apps</h2>
+    </div>
+    <button class="btn btn-ghost btn-sm">View All →</button>
+  </div>
+
+  <!-- Enhancement Banner -->
+  <div class="enhancement-banner">
+    <div class="enhancement-icon">🎨</div>
+    <div class="enhancement-text">
+      <h3>Free Customization Before You Buy</h3>
+      <p>Request up to 3 major enhancements on any app before purchasing — we'll tailor it to your exact needs at no extra cost.</p>
+    </div>
+    <button class="btn btn-gold" onclick="showNotif('Request a customization — feature coming soon!')">Request Enhancement</button>
+  </div>
+
+  <div class="search-bar">
+    <input class="search-input" placeholder="🔍  Search apps, categories, platforms..." oninput="filterApps(this.value)">
+    <button class="btn btn-primary btn-sm" onclick="showNotif('Search functionality active!')">Search</button>
+  </div>
+
+  <div class="category-filters">
+    <button class="cat-btn active" onclick="filterCat(this,'all')">All Apps</button>
+    <button class="cat-btn" onclick="filterCat(this,'finance')">💰 Finance</button>
+    <button class="cat-btn" onclick="filterCat(this,'hr')">👥 HR</button>
+    <button class="cat-btn" onclick="filterCat(this,'sales')">📈 Sales</button>
+    <button class="cat-btn" onclick="filterCat(this,'customer')">💬 Customer Service</button>
+    <button class="cat-btn" onclick="filterCat(this,'marketing')">📣 Marketing</button>
+    <button class="cat-btn" onclick="filterCat(this,'integration')">🔌 Integration</button>
+    <button class="cat-btn" onclick="filterCat(this,'analytics')">📊 Analytics</button>
+    <button class="cat-btn" onclick="filterCat(this,'workflows')">⚙️ Workflows</button>
+    <button class="cat-btn" onclick="filterCat(this,'agents')">🤖 Agents</button>
+  </div>
+
+  <!-- Featured App -->
+  <div class="featured-banner">
+    <div>
+      <div class="section-tag" style="margin-bottom:8px">Featured App of the Week</div>
+      <div class="featured-title">FinanceAI Pro — Automated CFO Assistant</div>
+      <div class="featured-desc">Complete financial intelligence suite — cash flow forecasting, anomaly detection, and board-ready reports generated autonomously. Built on Claude + Bubble.</div>
+      <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="openModal('financeai')">View Details</button>
+        <button class="btn btn-outline" onclick="showDemo()">🧪 Try Free Demo</button>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Purchase Price</div>
+      <div style="font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:var(--accent)">$2,499</div>
+      <div style="font-size:12px;color:var(--muted)">or $149/mo on our servers</div>
+      <div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+        <span class="badge badge-platform">Claude</span>
+        <span class="badge badge-platform">Bubble</span>
+        <span class="badge badge-cat">Finance</span>
+        <span class="badge badge-featured">⭐ Featured</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-grid" id="appGrid">
+
+    <!-- App 1 -->
+    <div class="app-card" data-cat="finance" onclick="openModal('financeai')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,229,255,0.05));border:1px solid rgba(0,229,255,0.2)">💰</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">Claude</span>
+          <span class="badge badge-cat">Finance</span>
+          <span class="badge badge-new">New</span>
+        </div>
+      </div>
+      <div class="app-name">FinanceAI Pro</div>
+      <div class="app-desc">Automated CFO assistant with cash flow forecasting, anomaly detection, and board-ready financial reports.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+        <div class="app-reviews">(147 reviews)</div>
+        <div class="app-vendor">by <span>AlphaDev Labs</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$2,499<span class="sub-price">or $149/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('financeai')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 2 -->
+    <div class="app-card" data-cat="hr" onclick="openModal('hragent')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(123,94,167,0.2),rgba(123,94,167,0.05));border:1px solid rgba(123,94,167,0.2)">👥</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">Lindy.ai</span>
+          <span class="badge badge-cat">HR</span>
+        </div>
+      </div>
+      <div class="app-name">HireFlow Agent</div>
+      <div class="app-desc">End-to-end recruiting automation — screening, scheduling, scoring, and onboarding workflows managed by AI agents.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★★</span><span>4.8</span></div>
+        <div class="app-reviews">(89 reviews)</div>
+        <div class="app-vendor">by <span>Nexus HR Tech</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$1,799<span class="sub-price">or $99/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('hragent')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 3 -->
+    <div class="app-card" data-cat="sales" onclick="openModal('salespilot')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(255,209,102,0.15),rgba(255,209,102,0.05));border:1px solid rgba(255,209,102,0.2)">📈</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">n8n</span>
+          <span class="badge badge-cat">Sales</span>
+          <span class="badge badge-featured">⭐</span>
+        </div>
+      </div>
+      <div class="app-name">SalesPilot AI</div>
+      <div class="app-desc">Intelligent sales pipeline manager — lead scoring, follow-up automation, deal forecasting and personalised outreach at scale.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★☆</span><span>4.7</span></div>
+        <div class="app-reviews">(203 reviews)</div>
+        <div class="app-vendor">by <span>GrowthStack</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$1,299<span class="sub-price">or $79/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('salespilot')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 4 -->
+    <div class="app-card" data-cat="customer" onclick="openModal('supportgpt')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(6,214,160,0.15),rgba(6,214,160,0.05));border:1px solid rgba(6,214,160,0.2)">💬</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">Claude</span>
+          <span class="badge badge-cat">Customer Service</span>
+        </div>
+      </div>
+      <div class="app-name">SupportAI 360</div>
+      <div class="app-desc">Omnichannel customer support agent with ticket triage, intelligent escalation, and sentiment-based prioritization across email, chat, and social.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+        <div class="app-reviews">(312 reviews)</div>
+        <div class="app-vendor">by <span>CXFusion</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$2,199<span class="sub-price">or $129/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('supportgpt')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 5 -->
+    <div class="app-card" data-cat="marketing" onclick="openModal('contentai')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(255,107,53,0.15),rgba(255,107,53,0.05));border:1px solid rgba(255,107,53,0.2)">📣</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">Replit</span>
+          <span class="badge badge-cat">Marketing</span>
+          <span class="badge badge-new">New</span>
+        </div>
+      </div>
+      <div class="app-name">ContentForge AI</div>
+      <div class="app-desc">Full-stack content marketing engine — blog posts, social captions, email sequences, and ad copy generated and scheduled autonomously.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★☆</span><span>4.6</span></div>
+        <div class="app-reviews">(91 reviews)</div>
+        <div class="app-vendor">by <span>Pixel&Prompt</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$899<span class="sub-price">or $59/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('contentai')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 6 -->
+    <div class="app-card" data-cat="analytics" onclick="openModal('dataops')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(0,229,255,0.12),rgba(123,94,167,0.1));border:1px solid rgba(0,229,255,0.15)">📊</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">LangChain</span>
+          <span class="badge badge-cat">Analytics</span>
+        </div>
+      </div>
+      <div class="app-name">DataOps Intelligence</div>
+      <div class="app-desc">Natural language business intelligence — ask questions in plain English, get SQL queries, charts, and executive summaries instantly.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★★</span><span>4.8</span></div>
+        <div class="app-reviews">(178 reviews)</div>
+        <div class="app-vendor">by <span>QueryMind Co.</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$1,599<span class="sub-price">or $89/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('dataops')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 7 -->
+    <div class="app-card" data-cat="workflows" onclick="openModal('flowbot')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(255,209,102,0.12),rgba(255,107,53,0.08));border:1px solid rgba(255,209,102,0.15)">⚙️</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">Flowise</span>
+          <span class="badge badge-cat">Workflows</span>
+        </div>
+      </div>
+      <div class="app-name">FlowBot Suite</div>
+      <div class="app-desc">Visual workflow automation with AI decision nodes — connect your entire SaaS stack and automate multi-step business processes without code.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★☆</span><span>4.5</span></div>
+        <div class="app-reviews">(56 reviews)</div>
+        <div class="app-vendor">by <span>AutomateHQ</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$799<span class="sub-price">or $49/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('flowbot')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 8 -->
+    <div class="app-card" data-cat="agents" onclick="openModal('agentops')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(123,94,167,0.2),rgba(0,229,255,0.08));border:1px solid rgba(123,94,167,0.2)">🤖</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">CrewAI</span>
+          <span class="badge badge-cat">Agents</span>
+          <span class="badge badge-featured">⭐</span>
+        </div>
+      </div>
+      <div class="app-name">AgentOps Platform</div>
+      <div class="app-desc">Multi-agent orchestration platform — deploy specialized AI agent teams that research, plan, execute, and report on complex business tasks.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★★</span><span>4.9</span></div>
+        <div class="app-reviews">(67 reviews)</div>
+        <div class="app-vendor">by <span>OrbitAI</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$3,499<span class="sub-price">or $199/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('agentops')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 9 -->
+    <div class="app-card" data-cat="integration" onclick="openModal('syncbridge')">
+      <div class="app-card-header">
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(6,214,160,0.12),rgba(0,229,255,0.06));border:1px solid rgba(6,214,160,0.15)">🔌</div>
+        <div class="app-badges">
+          <span class="badge badge-platform">n8n</span>
+          <span class="badge badge-cat">Integration</span>
+        </div>
+      </div>
+      <div class="app-name">SyncBridge AI</div>
+      <div class="app-desc">Intelligent middleware that syncs data across 200+ SaaS tools, resolves conflicts automatically, and maintains a single source of truth.</div>
+      <div class="app-meta">
+        <div class="app-rating"><span class="stars">★★★★☆</span><span>4.6</span></div>
+        <div class="app-reviews">(122 reviews)</div>
+        <div class="app-vendor">by <span>DataBridge Inc.</span></div>
+      </div>
+      <div class="app-footer">
+        <div class="app-price">$1,099<span class="sub-price">or $69/mo hosted</span></div>
+        <div class="app-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();showDemo()">Demo</button>
+          <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openModal('syncbridge')">Buy</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-tag">Process</div>
+  <h2 class="section-title" style="margin-bottom:48px">How AppForge Works</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-icon">🔍</div>
+      <div class="how-title">Discover & Test Free</div>
+      <div class="how-desc">Browse thousands of AI apps across categories. Try any app completely free — it runs live on our servers so you experience real functionality before spending a cent.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-icon">🎨</div>
+      <div class="how-title">Request Customizations</div>
+      <div class="how-desc">Need it tailored? Request up to 3 major enhancements for free before buying. Our team works directly with the vendor to adapt the app to your exact requirements.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-icon">💳</div>
+      <div class="how-title">Buy or Subscribe</div>
+      <div class="how-desc">Purchase the full source code (one-time fee) to self-host and white-label, or subscribe monthly to keep using the app on our managed infrastructure — zero DevOps needed.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">04</div>
+      <div class="how-icon">🚀</div>
+      <div class="how-title">Deploy & Scale</div>
+      <div class="how-desc">Self-hosters download the full code and deploy to any server. Subscribers go live instantly on AppForge cloud. Hosting plans with dedicated resources also available.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title" style="margin-bottom:12px">Flexible Plans for Every User</h2>
+  <p style="color:var(--muted);margin-bottom:48px;max-width:500px">Try free, subscribe to use on our servers, or purchase full code for unlimited self-hosted deployment.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="plan-name">Free Trial</div>
+      <div class="plan-desc">Test before you commit</div>
+      <div class="plan-price">$0</div>
+      <div class="plan-note">No credit card required</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Test any app on AppForge servers</li>
+        <li><span class="check">✓</span> Limited usage per session</li>
+        <li><span class="check">✓</span> Access to full app catalog</li>
+        <li><span class="check">✓</span> Request 3 free enhancements</li>
+        <li><span class="x">×</span> Source code access</li>
+        <li><span class="x">×</span> White-label rights</li>
+        <li><span class="x">×</span> Self-hosting</li>
+      </ul>
+      <button class="btn btn-ghost" style="width:100%" onclick="showNotif('Sign up free — coming soon!')">Start Free</button>
+    </div>
+
+    <div class="pricing-card featured-plan">
+      <div class="popular-tag">MOST POPULAR</div>
+      <div class="plan-name">Hosted Subscription</div>
+      <div class="plan-desc">Run apps on our managed cloud</div>
+      <div class="plan-price">$49–199 <span class="per">/mo</span></div>
+      <div class="plan-note">Per app · Varies by app complexity</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Unlimited app usage on our servers</li>
+        <li><span class="check">✓</span> Zero DevOps or setup required</li>
+        <li><span class="check">✓</span> Auto-updates from vendor</li>
+        <li><span class="check">✓</span> 99.9% uptime SLA</li>
+        <li><span class="check">✓</span> Cancel anytime</li>
+        <li><span class="x">×</span> Source code access</li>
+        <li><span class="x">×</span> White-label rights</li>
+      </ul>
+      <button class="btn btn-primary" style="width:100%" onclick="showNotif('Subscribe — coming soon!')">Subscribe Now</button>
+    </div>
+
+    <div class="pricing-card">
+      <div class="plan-name">Full Purchase</div>
+      <div class="plan-desc">Own the code, deploy anywhere</div>
+      <div class="plan-price">$799+ <span class="per">one-time</span></div>
+      <div class="plan-note">Price set by vendor per app</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Complete source code download</li>
+        <li><span class="check">✓</span> White-label & rebrand rights</li>
+        <li><span class="check">✓</span> Self-host on any server</li>
+        <li><span class="check">✓</span> One-time payment, no recurring fee</li>
+        <li><span class="check">✓</span> 3 free enhancement requests included</li>
+        <li><span class="check">✓</span> 30-day post-purchase support</li>
+      </ul>
+      <button class="btn btn-gold" style="width:100%" onclick="showNotif('Purchase code — browse marketplace first!')">Buy Source Code</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VENDOR SECTION -->
+<section id="vendors">
+  <div class="vendor-split">
+    <div class="vendor-text">
+      <div class="section-tag">For Vendors</div>
+      <h2 class="section-title" style="margin-bottom:20px">Sell Your AI App<br>to Thousands of Businesses</h2>
+      <p>Whether you've built on Claude, Replit, Bubble or any AI platform — AppForge is the fastest way to monetize your creation and reach enterprise buyers worldwide.</p>
+
+      <div class="vendor-features">
+        <div class="vendor-feat">
+          <div class="feat-icon">🏪</div>
+          <div class="feat-body">
+            <h4>One-Time Listing Fee</h4>
+            <p>Pay once to list your app. We review and approve it against our quality standards within 5 business days.</p>
+          </div>
+        </div>
+        <div class="vendor-feat">
+          <div class="feat-icon">💸</div>
+          <div class="feat-body">
+            <h4>Revenue Share on Transactions</h4>
+            <p>We take a small percentage on each sale. You keep the majority of every purchase and subscription.</p>
+          </div>
+        </div>
+        <div class="vendor-feat">
+          <div class="feat-icon">🧪</div>
+          <div class="feat-body">
+            <h4>We Host Demos for You</h4>
+            <p>AppForge hosts a live version of your app so buyers can try it before they buy — driving higher conversion rates.</p>
+          </div>
+        </div>
+        <div class="vendor-feat">
+          <div class="feat-icon">📊</div>
+          <div class="feat-body">
+            <h4>Vendor Dashboard & Analytics</h4>
+            <p>Real-time sales, trial conversions, customer reviews, and enhancement request tracking — all in one place.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="showNotif('Vendor onboarding coming soon!')">List Your App →</button>
+    </div>
+
+    <div class="vendor-card">
+      <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;margin-bottom:6px">Vendor Fee Structure</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:24px">Transparent, simple pricing for app vendors</p>
+
+      <div class="fee-row">
+        <div class="fee-label">App Listing Fee (one-time)</div>
+        <div class="fee-val">$99</div>
+      </div>
+      <div class="fee-row">
+        <div class="fee-label">Transaction Commission (sale)</div>
+        <div class="fee-val">12%</div>
+      </div>
+      <div class="fee-row">
+        <div class="fee-label">Subscription Revenue Share</div>
+        <div class="fee-val">15%</div>
+      </div>
+      <div class="fee-row">
+        <div class="fee-label">Demo Hosting (we cover it)</div>
+        <div class="fee-val" style="color:var(--green)">Free</div>
+      </div>
+      <div class="fee-row">
+        <div class="fee-label">Enhancement Handling (3 per buyer)</div>
+        <div class="fee-val" style="color:var(--green)">Free</div>
+      </div>
+      <div class="fee-row">
+        <div class="fee-label">Payout Frequency</div>
+        <div class="fee-val" style="font-size:13px;color:var(--text)">Monthly</div>
+      </div>
+
+      <div style="margin-top:20px;padding:16px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.12);border-radius:10px;">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Listing Standards Required</div>
+        <div style="font-size:13px;color:var(--text)">All apps undergo a technical review, security scan, and UX evaluation before being approved for the marketplace.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STANDARDS -->
+<section>
+  <div class="section-tag">Quality</div>
+  <h2 class="section-title" style="margin-bottom:12px">App Listing Standards</h2>
+  <p style="color:var(--muted);margin-bottom:40px">Every app on AppForge is vetted against strict quality criteria before approval.</p>
+  <div class="standards-grid">
+    <div class="standard-card">
+      <div class="standard-icon">🔐</div>
+      <div class="standard-title">Security Review</div>
+      <div class="standard-desc">All code undergoes automated and manual security scanning. No vulnerabilities, hardcoded credentials, or insecure API calls permitted.</div>
+    </div>
+    <div class="standard-card">
+      <div class="standard-icon">📋</div>
+      <div class="standard-title">Documentation Required</div>
+      <div class="standard-desc">Apps must include comprehensive setup documentation, API references, and user guides in English.</div>
+    </div>
+    <div class="standard-card">
+      <div class="standard-icon">🎯</div>
+      <div class="standard-title">Functional Testing</div>
+      <div class="standard-desc">Our team stress-tests every app in a live environment to verify all claimed features work as described.</div>
+    </div>
+    <div class="standard-card">
+      <div class="standard-icon">♿</div>
+      <div class="standard-title">Accessibility Standards</div>
+      <div class="standard-desc">Apps with UI components must meet WCAG 2.1 AA accessibility guidelines for inclusive user experience.</div>
+    </div>
+    <div class="standard-card">
+      <div class="standard-icon">🔄</div>
+      <div class="standard-title">Maintained & Updated</div>
+      <div class="standard-desc">Vendors commit to addressing critical bugs within 14 days and maintaining compatibility with platform updates.</div>
+    </div>
+    <div class="standard-card">
+      <div class="standard-icon">📜</div>
+      <div class="standard-title">Licensing Compliance</div>
+      <div class="standard-desc">All dependencies and AI platform APIs must be used in compliance with their respective licenses and terms of service.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOSTING -->
+<section id="hosting">
+  <div class="section-tag">Infrastructure</div>
+  <h2 class="section-title" style="margin-bottom:12px">Managed Hosting Plans</h2>
+  <p style="color:var(--muted);margin-bottom:40px">After purchasing source code, host on our servers or spin up a dedicated environment.</p>
+  <div class="hosting-grid">
+    <div class="hosting-card">
+      <div class="hosting-tier">Starter</div>
+      <div style="font-size:13px;color:var(--muted)">For small teams getting started</div>
+      <div class="hosting-price">$29<span style="font-size:16px;color:var(--muted)">/mo</span></div>
+      <div class="hosting-period">per app hosted</div>
+      <ul class="hosting-specs">
+        <li>1 vCPU · 2GB RAM</li>
+        <li>10GB SSD Storage</li>
+        <li>100GB Bandwidth</li>
+        <li>SSL Certificate included</li>
+        <li>99.5% Uptime SLA</li>
+        <li>Community Support</li>
+      </ul>
+      <button class="btn btn-ghost" style="width:100%" onclick="showNotif('Hosting signup coming soon!')">Get Started</button>
+    </div>
+
+    <div class="hosting-card" style="border-color:var(--accent);background:linear-gradient(160deg,rgba(0,229,255,0.05) 0%,var(--surface) 60%)">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%)" class="popular-tag">RECOMMENDED</div>
+      <div class="hosting-tier">Business</div>
+      <div style="font-size:13px;color:var(--muted)">For growing businesses</div>
+      <div class="hosting-price">$79<span style="font-size:16px;color:var(--muted)">/mo</span></div>
+      <div class="hosting-period">per app hosted</div>
+      <ul class="hosting-specs">
+        <li>4 vCPU · 8GB RAM</li>
+        <li>50GB NVMe Storage</li>
+        <li>1TB Bandwidth</li>
+        <li>Custom domain + SSL</li>
+        <li>99.9% Uptime SLA</li>
+        <li>Priority Email Support</li>
+        <li>Daily backups</li>
+      </ul>
+      <button class="btn btn-primary" style="width:100%" onclick="showNotif('Business hosting coming soon!')">Choose Business</button>
+    </div>
+
+    <div class="hosting-card">
+      <div class="hosting-tier">Enterprise</div>
+      <div style="font-size:13px;color:var(--muted)">Dedicated resources & SLA</div>
+      <div class="hosting-price">$249<span style="font-size:16px;color:var(--muted)">/mo</span></div>
+      <div class="hosting-period">per app hosted</div>
+      <ul class="hosting-specs">
+        <li>16 vCPU · 32GB RAM</li>
+        <li>500GB NVMe Storage</li>
+        <li>Unlimited Bandwidth</li>
+        <li>VPC Isolation</li>
+        <li>99.99% Uptime SLA</li>
+        <li>24/7 Dedicated Support</li>
+        <li>Hourly backups</li>
+        <li>Compliance reporting</li>
+      </ul>
+      <button class="btn btn-outline" style="width:100%" onclick="showNotif('Enterprise — contact us!')">Contact Sales</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CUSTOM BUILD -->
+<section id="custom">
+  <div class="custom-section">
+    <div class="section-tag">Custom Development</div>
+    <h2>Need an App Built From Scratch?</h2>
+    <p>Define your requirements and our network of verified AI developers will build a custom app tailored exactly to your business needs — then list it or keep it private.</p>
+
+    <div class="custom-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label>Your Name</label>
+          <input type="text" placeholder="Jane Smith">
+        </div>
+        <div class="form-field">
+          <label>Company</label>
+          <input type="text" placeholder="Acme Corp">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>App Category</label>
+          <select>
+            <option>Finance & Accounting</option>
+            <option>HR & Recruitment</option>
+            <option>Sales & CRM</option>
+            <option>Customer Service</option>
+            <option>Marketing & Content</option>
+            <option>Integration & Automation</option>
+            <option>Analytics & BI</option>
+            <option>Workflow Automation</option>
+            <option>AI Agents</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Preferred AI Platform</label>
+          <select>
+            <option>No preference (recommend best)</option>
+            <option>Claude (Anthropic)</option>
+            <option>Replit</option>
+            <option>Lindy.ai</option>
+            <option>Bubble</option>
+            <option>n8n</option>
+            <option>Flowise</option>
+            <option>LangChain / CrewAI</option>
+            <option>OpenAI Platform</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Describe Your App Requirements</label>
+        <textarea placeholder="Tell us what problem you're trying to solve, what integrations you need, who will use it, and any specific features..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Budget Range</label>
+          <select>
+            <option>Under $2,000</option>
+            <option>$2,000 – $5,000</option>
+            <option>$5,000 – $15,000</option>
+            <option>$15,000+</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Timeline</label>
+          <select>
+            <option>ASAP (rush)</option>
+            <option>Within 2 weeks</option>
+            <option>Within 1 month</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:14px" onclick="showNotif('✅ Requirements submitted! Our team will contact you within 24 hours.')">Submit Requirements →</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-tag">Reviews</div>
+  <h2 class="section-title" style="margin-bottom:40px">Loved by Teams Worldwide</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars" style="margin-bottom:12px;font-size:14px">★★★★★</div>
+      <div class="testimonial-text">"Bought SalesPilot AI and had it white-labeled and deployed on our server in under a day. The code was clean, well-documented, and the 3 free enhancement requests were a game-changer — they added our CRM integration at no extra cost."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:rgba(0,229,255,0.15);color:var(--accent)">S</div>
+        <div>
+          <div class="author-name">Sarah K.</div>
+          <div class="author-role">VP Sales, TechFlow Inc.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars" style="margin-bottom:12px;font-size:14px">★★★★★</div>
+      <div class="testimonial-text">"As a vendor, the platform has been incredible. Listed my HR automation app 3 months ago and it's generated more revenue than I expected. The demo hosting converts casual browsers into buyers constantly."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:rgba(123,94,167,0.2);color:#B39DDB">M</div>
+        <div>
+          <div class="author-name">Marcus T.</div>
+          <div class="author-role">Indie Developer, NexusHR</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars" style="margin-bottom:12px;font-size:14px">★★★★★</div>
+      <div class="testimonial-text">"We use the subscription model for 4 apps across our operations team. No IT overhead, always up to date, and the pricing is fraction of building in-house. AppForge is now central to our AI strategy."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:rgba(6,214,160,0.15);color:var(--green)">R</div>
+        <div>
+          <div class="author-name">Riya M.</div>
+          <div class="author-role">COO, Vertix Solutions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">App<span>Forge</span></span>
+      <p>The premier marketplace for AI-powered applications. Buy, sell, test, and deploy apps built on the world's leading AI platforms.</p>
+      <div style="display:flex;gap:12px;margin-top:20px">
+        <button class="btn btn-ghost btn-sm" onclick="showNotif('Twitter / X coming soon!')">𝕏 Twitter</button>
+        <button class="btn btn-ghost btn-sm" onclick="showNotif('LinkedIn coming soon!')">in LinkedIn</button>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Marketplace</h4>
+      <ul>
+        <li><a href="#">Browse All Apps</a></li>
+        <li><a href="#">Finance Apps</a></li>
+        <li><a href="#">HR & People</a></li>
+        <li><a href="#">Sales Tools</a></li>
+        <li><a href="#">AI Agents</a></li>
+        <li><a href="#">Analytics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Vendors</h4>
+      <ul>
+        <li><a href="#">List Your App</a></li>
+        <li><a href="#">Vendor Dashboard</a></li>
+        <li><a href="#">Fee Structure</a></li>
+        <li><a href="#">Quality Standards</a></li>
+        <li><a href="#">Vendor Support</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About AppForge</a></li>
+        <li><a href="#">Hosting Plans</a></li>
+        <li><a href="#">Custom Development</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 AppForge Inc. All rights reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="appModal" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+
+    <div class="modal-app-header">
+      <div class="modal-icon" id="modalIcon" style="background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,229,255,0.05));border:1px solid rgba(0,229,255,0.2)">💰</div>
+      <div class="modal-info">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px" id="modalBadges"></div>
+        <h2 id="modalTitle">FinanceAI Pro</h2>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+          <div class="app-rating"><span class="stars">★★★★★</span><span style="font-size:13px">4.9</span></div>
+          <div class="app-reviews">(147 reviews)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-tabs">
+      <button class="tab active" onclick="switchTab(this,'overview')">Overview</button>
+      <button class="tab" onclick="switchTab(this,'demo')">Live Demo</button>
+      <button class="tab" onclick="switchTab(this,'pricing')">Purchase</button>
+      <button class="tab" onclick="switchTab(this,'enhance')">Enhancements</button>
+    </div>
+
+    <div class="tab-content active" id="tab-overview">
+      <p id="modalDesc" style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Built On</div>
+          <div style="font-size:14px;font-weight:600" id="modalPlatform">Claude + Bubble</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Vendor</div>
+          <div style="font-size:14px;font-weight:600" id="modalVendor">AlphaDev Labs</div>
+        </div>
+      </div>
+      <h4 style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px">Key Features</h4>
+      <ul id="modalFeatures" style="list-style:none;display:flex;flex-direction:column;gap:8px"></ul>
+    </div>
+
+    <div class="tab-content" id="tab-demo">
+      <div style="margin-bottom:16px;font-size:14px;color:var(--muted)">Try a live preview of this app — no account needed.</div>
+      <div class="demo-area">
+        <div class="demo-header">
+          <div class="demo-dot" style="background:#FF5F57"></div>
+          <div class="demo-dot" style="background:#FFBD2E"></div>
+          <div class="demo-dot" style="background:#28C840"></div>
+        </div>
+        <div class="demo-chat" id="demoChat">
+          <div class="demo-msg ai">👋 Welcome! I'm your AI assistant. Ask me anything about your business data.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <input class="search-input" id="demoInput" placeholder="Type a message to test..." style="flex:1" onkeydown="if(event.key==='Enter')sendDemoMsg()">
+        <button class="btn btn-primary btn-sm" onclick="sendDemoMsg()">Send</button>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-pricing">
+      <div class="modal-pricing-grid">
+        <div class="modal-price-card">
+          <div class="modal-price-label">Monthly Subscription</div>
+          <div class="modal-price-val" id="modalSubPrice" style="color:var(--green)">$149</div>
+          <div class="modal-price-note">Use on AppForge servers</div>
+          <button class="btn btn-green" style="width:100%;margin-top:12px;font-size:12px" onclick="showNotif('Subscription flow coming soon!')">Subscribe</button>
+        </div>
+        <div class="modal-price-card highlight">
+          <div class="modal-price-label">One-Time Purchase</div>
+          <div class="modal-price-val" id="modalBuyPrice" style="color:var(--accent)">$2,499</div>
+          <div class="modal-price-note">Full source code + white-label</div>
+          <button class="btn btn-primary" style="width:100%;margin-top:12px;font-size:12px" onclick="showNotif('Purchase flow coming soon!')">Buy Code</button>
+        </div>
+        <div class="modal-price-card">
+          <div class="modal-price-label">Hosted (post-purchase)</div>
+          <div class="modal-price-val" style="color:var(--gold)">$79</div>
+          <div class="modal-price-note">Business plan/mo on our servers</div>
+          <button class="btn btn-gold" style="width:100%;margin-top:12px;font-size:12px" onclick="showNotif('Hosting plan coming soon!')">Add Hosting</button>
+        </div>
+      </div>
+      <div style="padding:16px;background:rgba(6,214,160,0.05);border:1px solid rgba(6,214,160,0.15);border-radius:10px;font-size:13px;color:var(--muted)">
+        <strong style="color:var(--green)">30-Day Satisfaction Guarantee</strong> — If the purchased app doesn't match its listing description, we offer a full refund within 30 days.
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-enhance">
+      <div style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.15);border-radius:12px;padding:20px;margin-bottom:20px">
+        <h4 style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px">🎨 3 Free Enhancement Requests Included</h4>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">Before (or after) purchasing, request up to 3 major customizations. Our team coordinates with the vendor to implement them at no cost. Enhancements include feature additions, UI changes, new integrations, or workflow modifications.</p>
+      </div>
+      <div class="form-field" style="text-align:left;margin-bottom:14px">
+        <label>Describe Enhancement Request</label>
+        <textarea placeholder="e.g., Add Slack notifications when cash flow drops below threshold, integrate with QuickBooks API, change dashboard color scheme to match our brand..."></textarea>
+      </div>
+      <button class="btn btn-gold" style="width:100%" onclick="showNotif('✅ Enhancement request submitted! We\'ll respond within 48 hours.')">Submit Enhancement Request (1 of 3 used)</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif">
+  <span>✅</span>
+  <span id="notifText">Done!</span>
+</div>
+
+<script>
+// App data
+const apps = {
+  financeai: {
+    icon: '💰', iconBg: 'linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,229,255,0.05))', iconBorder: 'rgba(0,229,255,0.2)',
+    title: 'FinanceAI Pro', platform: 'Claude + Bubble', vendor: 'AlphaDev Labs',
+    badges: ['<span class="badge badge-platform">Claude</span><span class="badge badge-cat">Finance</span><span class="badge badge-featured">⭐ Featured</span>'],
+    desc: 'Automated CFO assistant with cash flow forecasting, anomaly detection, and board-ready financial reports generated fully autonomously. Connects to your accounting software and delivers daily intelligence.',
+    subPrice: '$149', buyPrice: '$2,499',
+    features: ['Automated cash flow forecasting (30/60/90 day)', 'Anomaly detection with instant alerts', 'Board-ready PDF report generation', 'QuickBooks, Xero & NetSuite integration', 'Budget vs. actual variance analysis', 'Multi-entity consolidation support']
+  },
+  hragent: {
+    icon: '👥', iconBg: 'linear-gradient(135deg,rgba(123,94,167,0.2),rgba(123,94,167,0.05))', iconBorder: 'rgba(123,94,167,0.2)',
+    title: 'HireFlow Agent', platform: 'Lindy.ai', vendor: 'Nexus HR Tech',
+    badges: ['<span class="badge badge-platform">Lindy.ai</span><span class="badge badge-cat">HR</span>'],
+    desc: 'End-to-end recruiting automation — AI agents handle resume screening, interview scheduling, candidate scoring, reference checks, and onboarding workflows. Reduce time-to-hire by 60%.',
+    subPrice: '$99', buyPrice: '$1,799',
+    features: ['AI resume screening & shortlisting', 'Automated interview scheduling', 'Candidate scoring & ranking engine', 'Offer letter generation', 'Onboarding checklist automation', 'ATS integration (Greenhouse, Lever, Workday)']
+  },
+  salespilot: {
+    icon: '📈', iconBg: 'linear-gradient(135deg,rgba(255,209,102,0.15),rgba(255,209,102,0.05))', iconBorder: 'rgba(255,209,102,0.2)',
+    title: 'SalesPilot AI', platform: 'n8n + OpenAI', vendor: 'GrowthStack',
+    badges: ['<span class="badge badge-platform">n8n</span><span class="badge badge-cat">Sales</span><span class="badge badge-featured">⭐</span>'],
+    desc: 'Intelligent sales pipeline manager — lead scoring, follow-up automation, deal forecasting and personalised outreach at scale. Integrates with Salesforce, HubSpot, and Pipedrive.',
+    subPrice: '$79', buyPrice: '$1,299',
+    features: ['AI lead scoring & prioritization', 'Personalised email outreach at scale', 'Deal velocity prediction', 'CRM auto-update from email/call data', 'Win/loss analysis reports', 'Sales coach with call transcript insights']
+  },
+  supportgpt: {
+    icon: '💬', iconBg: 'linear-gradient(135deg,rgba(6,214,160,0.15),rgba(6,214,160,0.05))', iconBorder: 'rgba(6,214,160,0.2)',
+    title: 'SupportAI 360', platform: 'Claude + Retool', vendor: 'CXFusion',
+    badges: ['<span class="badge badge-platform">Claude</span><span class="badge badge-cat">Customer Service</span>'],
+    desc: 'Omnichannel customer support agent with ticket triage, intelligent escalation, and sentiment-based prioritization across email, chat, and social media channels.',
+    subPrice: '$129', buyPrice: '$2,199',
+    features: ['Omnichannel inbox (email, chat, social)', 'AI ticket classification & routing', 'Sentiment analysis & priority scoring', 'Auto-reply drafting with approval workflow', 'CSAT tracking & reporting', 'Zendesk, Freshdesk & Intercom integration']
+  },
+  contentai: {
+    icon: '📣', iconBg: 'linear-gradient(135deg,rgba(255,107,53,0.15),rgba(255,107,53,0.05))', iconBorder: 'rgba(255,107,53,0.2)',
+    title: 'ContentForge AI', platform: 'Replit + Claude', vendor: 'Pixel&Prompt',
+    badges: ['<span class="badge badge-platform">Replit</span><span class="badge badge-cat">Marketing</span><span class="badge badge-new">New</span>'],
+    desc: 'Full-stack content marketing engine — blog posts, social captions, email sequences, and ad copy generated and scheduled autonomously based on your brand voice.',
+    subPrice: '$59', buyPrice: '$899',
+    features: ['Brand voice training & consistency', 'Blog post generation (SEO-optimised)', 'Social media calendar automation', 'Email sequence builder', 'Ad copy variants for A/B testing', 'WordPress, Webflow & HubSpot publishing']
+  },
+  dataops: {
+    icon: '📊', iconBg: 'linear-gradient(135deg,rgba(0,229,255,0.12),rgba(123,94,167,0.1))', iconBorder: 'rgba(0,229,255,0.15)',
+    title: 'DataOps Intelligence', platform: 'LangChain + Claude', vendor: 'QueryMind Co.',
+    badges: ['<span class="badge badge-platform">LangChain</span><span class="badge badge-cat">Analytics</span>'],
+    desc: 'Natural language business intelligence — ask questions in plain English, get SQL queries, interactive charts, and executive summaries generated instantly from your data warehouse.',
+    subPrice: '$89', buyPrice: '$1,599',
+    features: ['Natural language to SQL query', 'Interactive chart generation', 'Executive summary auto-reports', 'Connects to BigQuery, Snowflake, Redshift', 'Anomaly & trend detection', 'Scheduled insight delivery via Slack/email']
+  },
+  flowbot: {
+    icon: '⚙️', iconBg: 'linear-gradient(135deg,rgba(255,209,102,0.12),rgba(255,107,53,0.08))', iconBorder: 'rgba(255,209,102,0.15)',
+    title: 'FlowBot Suite', platform: 'Flowise + n8n', vendor: 'AutomateHQ',
+    badges: ['<span class="badge badge-platform">Flowise</span><span class="badge badge-cat">Workflows</span>'],
+    desc: 'Visual workflow automation with AI decision nodes — connect your entire SaaS stack and automate multi-step business processes without writing a single line of code.',
+    subPrice: '$49', buyPrice: '$799',
+    features: ['Drag-and-drop workflow builder', 'AI decision node integration', '200+ pre-built SaaS connectors', 'Conditional branching & loops', 'Error handling & retry logic', 'Webhook triggers & scheduled runs']
+  },
+  agentops: {
+    icon: '🤖', iconBg: 'linear-gradient(135deg,rgba(123,94,167,0.2),rgba(0,229,255,0.08))', iconBorder: 'rgba(123,94,167,0.2)',
+    title: 'AgentOps Platform', platform: 'CrewAI + Claude', vendor: 'OrbitAI',
+    badges: ['<span class="badge badge-platform">CrewAI</span><span class="badge badge-cat">Agents</span><span class="badge badge-featured">⭐</span>'],
+    desc: 'Multi-agent orchestration platform — deploy specialized AI agent teams that research, plan, execute, and report on complex business tasks with minimal human oversight.',
+    subPrice: '$199', buyPrice: '$3,499',
+    features: ['Multi-agent team configuration', 'Specialized agent roles (researcher, writer, analyst)', 'Agent-to-agent communication & handoffs', 'Task queue management & monitoring', 'Human-in-the-loop approval gates', 'Full audit trail & activity logs']
+  },
+  syncbridge: {
+    icon: '🔌', iconBg: 'linear-gradient(135deg,rgba(6,214,160,0.12),rgba(0,229,255,0.06))', iconBorder: 'rgba(6,214,160,0.15)',
+    title: 'SyncBridge AI', platform: 'n8n + OpenAI', vendor: 'DataBridge Inc.',
+    badges: ['<span class="badge badge-platform">n8n</span><span class="badge badge-cat">Integration</span>'],
+    desc: 'Intelligent middleware that syncs data across 200+ SaaS tools, resolves conflicts automatically using AI, and maintains a single verified source of truth across your stack.',
+    subPrice: '$69', buyPrice: '$1,099',
+    features: ['200+ SaaS connectors out-of-the-box', 'AI conflict resolution engine', 'Real-time bi-directional sync', 'Data transformation & mapping', 'Sync health monitoring dashboard', 'GDPR-compliant data handling']
+  }
+};
+
+// Current app
+let currentApp = 'financeai';
+
+function openModal(appId) {
+  currentApp = appId;
+  const app = apps[appId];
+  if (!app) return;
+
+  document.getElementById('modalIcon').textContent = app.icon;
+  document.getElementById('modalIcon').style.background = app.iconBg;
+  document.getElementById('modalIcon').style.border = `1px solid ${app.iconBorder}`;
+  document.getElementById('modalTitle').textContent = app.title;
+  document.getElementById('modalPlatform').textContent = app.platform;
+  document.getElementById('modalVendor').textContent = app.vendor;
+  document.getElementById('modalDesc').textContent = app.desc;
+  document.getElementById('modalBadges').innerHTML = app.badges.join('');
+  document.getElementById('modalSubPrice').textContent = app.subPrice + '/mo';
+  document.getElementById('modalBuyPrice').textContent = app.buyPrice;
+
+  const featList = document.getElementById('modalFeatures');
+  featList.innerHTML = app.features.map(f => `<li style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)"><span style="color:var(--green)">→</span>${f}</li>`).join('');
+
+  // Reset tabs
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab')[0].classList.add('active');
+  document.getElementById('tab-overview').classList.add('active');
+
+  document.getElementById('appModal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('appModal')) closeModalDirect();
+}
+
+function closeModalDirect() {
+  document.getElementById('appModal').classList.remove('open');
+}
+
+function switchTab(el, tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+function showDemo() {
+  // Find modal and open it on demo tab for featured app
+  openModal('financeai');
+  setTimeout(() => {
+    document.querySelectorAll('.tab')[1].click();
+  }, 50);
+}
+
+// Demo chat
+const demoResponses = [
+  "I've analyzed your latest financials. Your Q3 revenue is up 18% YoY, but operating expenses increased 23%. I'd recommend reviewing software subscriptions — they've grown 41% this quarter.",
+  "Based on current cash flow trends, you have approximately 4.2 months of runway at current burn rate. I've flagged 3 overdue receivables totaling $42,800 for follow-up.",
+  "Your top performing product line is Enterprise SaaS subscriptions at 68% gross margin. Professional services is dragging overall margins down to 54%. Shall I generate a detailed breakdown?",
+  "I've scheduled the board report for Friday. It includes executive summary, P&L comparison, budget variance analysis, and 90-day forecast. Would you like to add the headcount plan?",
+  "Anomaly detected: A vendor invoice for $18,200 from TechSupply Ltd was charged twice this month. I've flagged it for your accounts payable team with supporting documentation."
+];
+
+let demoIdx = 0;
+
+function sendDemoMsg() {
+  const input = document.getElementById('demoInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const chat = document.getElementById('demoChat');
+  chat.innerHTML += `<div class="demo-msg user">${msg}</div>`;
+  input.value = '';
+
+  setTimeout(() => {
+    chat.innerHTML += `<div class="demo-msg ai">${demoResponses[demoIdx % demoResponses.length]}</div>`;
+    demoIdx++;
+    chat.scrollTop = chat.scrollHeight;
+  }, 800);
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// Category filter
+function filterCat(el, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+
+  document.querySelectorAll('.app-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Search filter
+function filterApps(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.app-card').forEach(card => {
+    const name = card.querySelector('.app-name').textContent.toLowerCase();
+    const desc = card.querySelector('.app-desc').textContent.toLowerCase();
+    card.style.display = (name.includes(q) || desc.includes(q)) ? '' : 'none';
+  });
+}
+
+// Notifications
+function showNotif(msg) {
+  const notif = document.getElementById('notif');
+  document.getElementById('notifText').textContent = msg;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
