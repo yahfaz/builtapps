@@ -7,17 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #080B14;
-    --surface: #0D1120;
-    --surface2: #131828;
-    --border: rgba(255,255,255,0.07);
-    --accent: #00E5FF;
+    --bg: #FFFFFF;
+    --surface: #F5F7FA;
+    --surface2: #EEF1F6;
+    --border: rgba(0,0,0,0.08);
+    --accent: #0070F3;
     --accent2: #7B5EA7;
     --accent3: #FF6B35;
-    --text: #E8EAF0;
+    --text: #111827;
     --muted: #6B7A9A;
-    --gold: #FFD166;
-    --green: #06D6A0;
+    --gold: #D97706;
+    --green: #059669;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,8 +41,8 @@
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(0,112,243,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,112,243,0.04) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
     z-index: 0;
@@ -57,7 +57,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 18px 48px;
-    background: rgba(8,11,20,0.85);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
@@ -124,14 +124,14 @@
 
   .btn-primary {
     background: var(--accent);
-    color: #080B14;
+    color: #ffffff;
     font-weight: 600;
   }
 
   .btn-primary:hover {
-    background: #33EEFF;
+    background: #0060d9;
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(0,229,255,0.3);
+    box-shadow: 0 8px 25px rgba(0,112,243,0.3);
   }
 
   .btn-outline {
@@ -141,32 +141,32 @@
   }
 
   .btn-outline:hover {
-    background: rgba(0,229,255,0.08);
+    background: rgba(0,112,243,0.08);
     transform: translateY(-1px);
   }
 
   .btn-gold {
-    background: var(--gold);
-    color: #080B14;
+    background: #D97706;
+    color: #ffffff;
     font-weight: 600;
   }
 
   .btn-gold:hover {
-    background: #FFD980;
+    background: #b45309;
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(255,209,102,0.3);
+    box-shadow: 0 8px 25px rgba(217,119,6,0.3);
   }
 
   .btn-green {
-    background: var(--green);
-    color: #080B14;
+    background: #059669;
+    color: #ffffff;
     font-weight: 600;
   }
 
   .btn-green:hover {
-    background: #2DEDB2;
+    background: #047857;
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(6,214,160,0.3);
+    box-shadow: 0 8px 25px rgba(5,150,105,0.3);
   }
 
   /* HERO */
@@ -188,8 +188,8 @@
     gap: 8px;
     padding: 6px 16px;
     border-radius: 100px;
-    background: rgba(0,229,255,0.08);
-    border: 1px solid rgba(0,229,255,0.2);
+    background: rgba(0,112,243,0.08);
+    border: 1px solid rgba(0,112,243,0.2);
     font-size: 13px;
     color: var(--accent);
     margin-bottom: 28px;
@@ -263,12 +263,12 @@
   }
   .orb1 {
     width: 500px; height: 500px;
-    background: rgba(0,229,255,0.06);
+    background: rgba(0,112,243,0.07);
     top: -100px; left: -100px;
   }
   .orb2 {
     width: 400px; height: 400px;
-    background: rgba(123,94,167,0.08);
+    background: rgba(123,94,167,0.07);
     bottom: 0; right: -100px;
   }
 
@@ -280,7 +280,7 @@
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     overflow: hidden;
-    background: rgba(13,17,32,0.5);
+    background: rgba(245,247,250,0.9);
   }
 
   .platforms-label {
@@ -394,6 +394,7 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
   .app-card::before {
@@ -407,9 +408,9 @@
   }
 
   .app-card:hover {
-    border-color: rgba(0,229,255,0.2);
+    border-color: rgba(0,112,243,0.3);
     transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
   }
 
   .app-card:hover::before { opacity: 1; }
@@ -447,27 +448,27 @@
   }
 
   .badge-platform {
-    background: rgba(123,94,167,0.15);
-    color: #B39DDB;
+    background: rgba(123,94,167,0.1);
+    color: #6B46C1;
     border: 1px solid rgba(123,94,167,0.2);
   }
 
   .badge-cat {
-    background: rgba(0,229,255,0.08);
+    background: rgba(0,112,243,0.08);
     color: var(--accent);
-    border: 1px solid rgba(0,229,255,0.15);
+    border: 1px solid rgba(0,112,243,0.18);
   }
 
   .badge-new {
-    background: rgba(6,214,160,0.1);
-    color: var(--green);
-    border: 1px solid rgba(6,214,160,0.2);
+    background: rgba(5,150,105,0.08);
+    color: #059669;
+    border: 1px solid rgba(5,150,105,0.2);
   }
 
   .badge-featured {
-    background: rgba(255,209,102,0.1);
-    color: var(--gold);
-    border: 1px solid rgba(255,209,102,0.2);
+    background: rgba(217,119,6,0.1);
+    color: #D97706;
+    border: 1px solid rgba(217,119,6,0.2);
   }
 
   .app-name {
@@ -504,7 +505,7 @@
     font-weight: 500;
   }
 
-  .stars { color: var(--gold); font-size: 12px; }
+  .stars { color: #D97706; font-size: 12px; }
 
   .app-reviews { font-size: 12px; color: var(--muted); }
 
@@ -541,8 +542,8 @@
 
   /* FEATURED BANNER */
   .featured-banner {
-    background: linear-gradient(135deg, rgba(0,229,255,0.08) 0%, rgba(123,94,167,0.12) 100%);
-    border: 1px solid rgba(0,229,255,0.15);
+    background: linear-gradient(135deg, rgba(0,112,243,0.06) 0%, rgba(123,94,167,0.06) 100%);
+    border: 1px solid rgba(0,112,243,0.15);
     border-radius: 20px;
     padding: 40px 48px;
     display: grid;
@@ -560,12 +561,12 @@
     top: 20px; right: 20px;
     font-size: 10px;
     letter-spacing: 3px;
-    color: var(--gold);
+    color: #D97706;
     font-weight: 700;
-    background: rgba(255,209,102,0.1);
+    background: rgba(217,119,6,0.1);
     padding: 4px 12px;
     border-radius: 100px;
-    border: 1px solid rgba(255,209,102,0.2);
+    border: 1px solid rgba(217,119,6,0.2);
   }
 
   .featured-title {
@@ -599,7 +600,7 @@
     font-size: 72px;
     font-weight: 800;
     line-height: 1;
-    color: rgba(0,229,255,0.06);
+    color: rgba(0,112,243,0.07);
     position: absolute;
     top: 16px; right: 24px;
     letter-spacing: -3px;
@@ -637,7 +638,7 @@
 
   .pricing-card.featured-plan {
     border-color: var(--accent);
-    background: linear-gradient(160deg, rgba(0,229,255,0.05) 0%, var(--surface) 60%);
+    background: linear-gradient(160deg, rgba(0,112,243,0.05) 0%, var(--surface) 60%);
   }
 
   .popular-tag {
@@ -694,8 +695,8 @@
   .plan-features li .check {
     width: 18px; height: 18px;
     border-radius: 50%;
-    background: rgba(6,214,160,0.15);
-    color: var(--green);
+    background: rgba(5,150,105,0.12);
+    color: #059669;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -706,7 +707,7 @@
   .plan-features li .x {
     width: 18px; height: 18px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.05);
+    background: rgba(0,0,0,0.05);
     color: var(--muted);
     display: flex;
     align-items: center;
@@ -748,8 +749,8 @@
   .feat-icon {
     width: 40px; height: 40px;
     border-radius: 10px;
-    background: rgba(0,229,255,0.08);
-    border: 1px solid rgba(0,229,255,0.12);
+    background: rgba(0,112,243,0.08);
+    border: 1px solid rgba(0,112,243,0.12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -808,7 +809,7 @@
     top: -80px; left: 50%;
     transform: translateX(-50%);
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(0,112,243,0.06) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -871,7 +872,7 @@
   .form-field input:focus,
   .form-field select:focus,
   .form-field textarea:focus {
-    border-color: rgba(0,229,255,0.4);
+    border-color: rgba(0,112,243,0.4);
   }
 
   .form-field textarea { resize: vertical; min-height: 100px; }
@@ -1011,7 +1012,7 @@
   .modal-overlay.open { display: flex; }
 
   .modal {
-    background: var(--surface);
+    background: #ffffff;
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 40px;
@@ -1020,12 +1021,13 @@
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   }
 
   .modal-close {
     position: absolute;
     top: 20px; right: 20px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.06);
     border: none;
     color: var(--muted);
     width: 32px; height: 32px;
@@ -1038,7 +1040,7 @@
     transition: all 0.2s;
   }
 
-  .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+  .modal-close:hover { background: rgba(0,0,0,0.1); color: var(--text); }
 
   .modal-app-header {
     display: flex;
@@ -1111,7 +1113,7 @@
 
   .modal-price-card.highlight {
     border-color: var(--accent);
-    background: rgba(0,229,255,0.04);
+    background: rgba(0,112,243,0.04);
   }
 
   .modal-price-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
@@ -1125,7 +1127,7 @@
 
   /* DEMO AREA */
   .demo-area {
-    background: var(--bg);
+    background: #F8FAFC;
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 24px;
@@ -1162,17 +1164,18 @@
   }
 
   .demo-msg.user {
-    background: rgba(0,229,255,0.1);
+    background: rgba(0,112,243,0.1);
     color: var(--accent);
     align-self: flex-end;
-    border: 1px solid rgba(0,229,255,0.15);
+    border: 1px solid rgba(0,112,243,0.18);
   }
 
   .demo-msg.ai {
-    background: var(--surface2);
+    background: #ffffff;
     color: var(--text);
     align-self: flex-start;
     border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   }
 
   /* FOOTER */
@@ -1227,8 +1230,8 @@
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background: var(--surface);
-    border: 1px solid rgba(6,214,160,0.3);
+    background: #ffffff;
+    border: 1px solid rgba(5,150,105,0.25);
     border-radius: 12px;
     padding: 14px 20px;
     font-size: 13px;
@@ -1238,6 +1241,8 @@
     gap: 10px;
     animation: slideIn 0.3s ease;
     max-width: 300px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    color: var(--text);
   }
 
   .notif.show { display: flex; }
@@ -1268,7 +1273,7 @@
     transition: border-color 0.2s;
   }
 
-  .search-input:focus { border-color: rgba(0,229,255,0.4); }
+  .search-input:focus { border-color: rgba(0,112,243,0.4); }
   .search-input::placeholder { color: var(--muted); }
 
   /* ENHANCEMENTS CALLOUT */
@@ -1642,7 +1647,7 @@
     <!-- App 8 -->
     <div class="app-card" data-cat="agents" onclick="openModal('agentops')">
       <div class="app-card-header">
-        <div class="app-icon" style="background:linear-gradient(135deg,rgba(123,94,167,0.2),rgba(0,229,255,0.08));border:1px solid rgba(123,94,167,0.2)">🤖</div>
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(123,94,167,0.15),rgba(0,112,243,0.06));border:1px solid rgba(123,94,167,0.2)">🤖</div>
         <div class="app-badges">
           <span class="badge badge-platform">CrewAI</span>
           <span class="badge badge-cat">Agents</span>
@@ -1668,7 +1673,7 @@
     <!-- App 9 -->
     <div class="app-card" data-cat="integration" onclick="openModal('syncbridge')">
       <div class="app-card-header">
-        <div class="app-icon" style="background:linear-gradient(135deg,rgba(6,214,160,0.12),rgba(0,229,255,0.06));border:1px solid rgba(6,214,160,0.15)">🔌</div>
+        <div class="app-icon" style="background:linear-gradient(135deg,rgba(5,150,105,0.1),rgba(0,112,243,0.05));border:1px solid rgba(5,150,105,0.15)">🔌</div>
         <div class="app-badges">
           <span class="badge badge-platform">n8n</span>
           <span class="badge badge-cat">Integration</span>
@@ -1861,7 +1866,7 @@
         <div class="fee-val" style="font-size:13px;color:var(--text)">Monthly</div>
       </div>
 
-      <div style="margin-top:20px;padding:16px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.12);border-radius:10px;">
+      <div style="margin-top:20px;padding:16px;background:rgba(0,112,243,0.05);border:1px solid rgba(0,112,243,0.12);border-radius:10px;">
         <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Listing Standards Required</div>
         <div style="font-size:13px;color:var(--text)">All apps undergo a technical review, security scan, and UX evaluation before being approved for the marketplace.</div>
       </div>
@@ -1934,7 +1939,7 @@
       <button class="btn btn-ghost" style="width:100%" onclick="showNotif('Hosting signup coming soon!')">Get Started</button>
     </div>
 
-    <div class="hosting-card" style="border-color:var(--accent);background:linear-gradient(160deg,rgba(0,229,255,0.05) 0%,var(--surface) 60%)">
+    <div class="hosting-card" style="border-color:var(--accent);background:linear-gradient(160deg,rgba(0,112,243,0.05) 0%,var(--surface) 60%)">
       <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%)" class="popular-tag">RECOMMENDED</div>
       <div class="hosting-tier">Business</div>
       <div style="font-size:13px;color:var(--muted)">For growing businesses</div>
@@ -2063,7 +2068,7 @@
       <div class="stars" style="margin-bottom:12px;font-size:14px">★★★★★</div>
       <div class="testimonial-text">"Bought SalesPilot AI and had it white-labeled and deployed on our server in under a day. The code was clean, well-documented, and the 3 free enhancement requests were a game-changer — they added our CRM integration at no extra cost."</div>
       <div class="testimonial-author">
-        <div class="author-avatar" style="background:rgba(0,229,255,0.15);color:var(--accent)">S</div>
+        <div class="author-avatar" style="background:rgba(0,112,243,0.1);color:var(--accent)">S</div>
         <div>
           <div class="author-name">Sarah K.</div>
           <div class="author-role">VP Sales, TechFlow Inc.</div>
@@ -2074,7 +2079,7 @@
       <div class="stars" style="margin-bottom:12px;font-size:14px">★★★★★</div>
       <div class="testimonial-text">"As a vendor, the platform has been incredible. Listed my HR automation app 3 months ago and it's generated more revenue than I expected. The demo hosting converts casual browsers into buyers constantly."</div>
       <div class="testimonial-author">
-        <div class="author-avatar" style="background:rgba(123,94,167,0.2);color:#B39DDB">M</div>
+        <div class="author-avatar" style="background:rgba(123,94,167,0.12);color:#6B46C1">M</div>
         <div>
           <div class="author-name">Marcus T.</div>
           <div class="author-role">Indie Developer, NexusHR</div>
@@ -2085,7 +2090,7 @@
       <div class="stars" style="margin-bottom:12px;font-size:14px">★★★★★</div>
       <div class="testimonial-text">"We use the subscription model for 4 apps across our operations team. No IT overhead, always up to date, and the pricing is fraction of building in-house. AppForge is now central to our AI strategy."</div>
       <div class="testimonial-author">
-        <div class="author-avatar" style="background:rgba(6,214,160,0.15);color:var(--green)">R</div>
+        <div class="author-avatar" style="background:rgba(5,150,105,0.1);color:#059669">R</div>
         <div>
           <div class="author-name">Riya M.</div>
           <div class="author-role">COO, Vertix Solutions</div>
@@ -2228,8 +2233,8 @@
           <button class="btn btn-gold" style="width:100%;margin-top:12px;font-size:12px" onclick="showNotif('Hosting plan coming soon!')">Add Hosting</button>
         </div>
       </div>
-      <div style="padding:16px;background:rgba(6,214,160,0.05);border:1px solid rgba(6,214,160,0.15);border-radius:10px;font-size:13px;color:var(--muted)">
-        <strong style="color:var(--green)">30-Day Satisfaction Guarantee</strong> — If the purchased app doesn't match its listing description, we offer a full refund within 30 days.
+      <div style="padding:16px;background:rgba(5,150,105,0.05);border:1px solid rgba(5,150,105,0.15);border-radius:10px;font-size:13px;color:var(--muted)">
+        <strong style="color:#059669">30-Day Satisfaction Guarantee</strong> — If the purchased app doesn't match its listing description, we offer a full refund within 30 days.
       </div>
     </div>
 
@@ -2257,7 +2262,7 @@
 // App data
 const apps = {
   financeai: {
-    icon: '💰', iconBg: 'linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,229,255,0.05))', iconBorder: 'rgba(0,229,255,0.2)',
+    icon: '💰', iconBg: 'linear-gradient(135deg,rgba(0,112,243,0.12),rgba(0,112,243,0.04))', iconBorder: 'rgba(0,112,243,0.18)',
     title: 'FinanceAI Pro', platform: 'Claude + Bubble', vendor: 'AlphaDev Labs',
     badges: ['<span class="badge badge-platform">Claude</span><span class="badge badge-cat">Finance</span><span class="badge badge-featured">⭐ Featured</span>'],
     desc: 'Automated CFO assistant with cash flow forecasting, anomaly detection, and board-ready financial reports generated fully autonomously. Connects to your accounting software and delivers daily intelligence.',
@@ -2281,7 +2286,7 @@ const apps = {
     features: ['AI lead scoring & prioritization', 'Personalised email outreach at scale', 'Deal velocity prediction', 'CRM auto-update from email/call data', 'Win/loss analysis reports', 'Sales coach with call transcript insights']
   },
   supportgpt: {
-    icon: '💬', iconBg: 'linear-gradient(135deg,rgba(6,214,160,0.15),rgba(6,214,160,0.05))', iconBorder: 'rgba(6,214,160,0.2)',
+    icon: '💬', iconBg: 'linear-gradient(135deg,rgba(5,150,105,0.12),rgba(5,150,105,0.04))', iconBorder: 'rgba(5,150,105,0.18)',
     title: 'SupportAI 360', platform: 'Claude + Retool', vendor: 'CXFusion',
     badges: ['<span class="badge badge-platform">Claude</span><span class="badge badge-cat">Customer Service</span>'],
     desc: 'Omnichannel customer support agent with ticket triage, intelligent escalation, and sentiment-based prioritization across email, chat, and social media channels.',
@@ -2297,7 +2302,7 @@ const apps = {
     features: ['Brand voice training & consistency', 'Blog post generation (SEO-optimised)', 'Social media calendar automation', 'Email sequence builder', 'Ad copy variants for A/B testing', 'WordPress, Webflow & HubSpot publishing']
   },
   dataops: {
-    icon: '📊', iconBg: 'linear-gradient(135deg,rgba(0,229,255,0.12),rgba(123,94,167,0.1))', iconBorder: 'rgba(0,229,255,0.15)',
+    icon: '📊', iconBg: 'linear-gradient(135deg,rgba(0,112,243,0.1),rgba(123,94,167,0.08))', iconBorder: 'rgba(0,112,243,0.14)',
     title: 'DataOps Intelligence', platform: 'LangChain + Claude', vendor: 'QueryMind Co.',
     badges: ['<span class="badge badge-platform">LangChain</span><span class="badge badge-cat">Analytics</span>'],
     desc: 'Natural language business intelligence — ask questions in plain English, get SQL queries, interactive charts, and executive summaries generated instantly from your data warehouse.',
@@ -2313,7 +2318,7 @@ const apps = {
     features: ['Drag-and-drop workflow builder', 'AI decision node integration', '200+ pre-built SaaS connectors', 'Conditional branching & loops', 'Error handling & retry logic', 'Webhook triggers & scheduled runs']
   },
   agentops: {
-    icon: '🤖', iconBg: 'linear-gradient(135deg,rgba(123,94,167,0.2),rgba(0,229,255,0.08))', iconBorder: 'rgba(123,94,167,0.2)',
+    icon: '🤖', iconBg: 'linear-gradient(135deg,rgba(123,94,167,0.15),rgba(0,112,243,0.06))', iconBorder: 'rgba(123,94,167,0.2)',
     title: 'AgentOps Platform', platform: 'CrewAI + Claude', vendor: 'OrbitAI',
     badges: ['<span class="badge badge-platform">CrewAI</span><span class="badge badge-cat">Agents</span><span class="badge badge-featured">⭐</span>'],
     desc: 'Multi-agent orchestration platform — deploy specialized AI agent teams that research, plan, execute, and report on complex business tasks with minimal human oversight.',
@@ -2321,7 +2326,7 @@ const apps = {
     features: ['Multi-agent team configuration', 'Specialized agent roles (researcher, writer, analyst)', 'Agent-to-agent communication & handoffs', 'Task queue management & monitoring', 'Human-in-the-loop approval gates', 'Full audit trail & activity logs']
   },
   syncbridge: {
-    icon: '🔌', iconBg: 'linear-gradient(135deg,rgba(6,214,160,0.12),rgba(0,229,255,0.06))', iconBorder: 'rgba(6,214,160,0.15)',
+    icon: '🔌', iconBg: 'linear-gradient(135deg,rgba(5,150,105,0.1),rgba(0,112,243,0.05))', iconBorder: 'rgba(5,150,105,0.15)',
     title: 'SyncBridge AI', platform: 'n8n + OpenAI', vendor: 'DataBridge Inc.',
     badges: ['<span class="badge badge-platform">n8n</span><span class="badge badge-cat">Integration</span>'],
     desc: 'Intelligent middleware that syncs data across 200+ SaaS tools, resolves conflicts automatically using AI, and maintains a single verified source of truth across your stack.',
@@ -2350,7 +2355,7 @@ function openModal(appId) {
   document.getElementById('modalBuyPrice').textContent = app.buyPrice;
 
   const featList = document.getElementById('modalFeatures');
-  featList.innerHTML = app.features.map(f => `<li style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)"><span style="color:var(--green)">→</span>${f}</li>`).join('');
+  featList.innerHTML = app.features.map(f => `<li style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)"><span style="color:#0070F3">→</span>${f}</li>`).join('');
 
   // Reset tabs
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
